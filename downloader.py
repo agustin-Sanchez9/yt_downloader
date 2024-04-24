@@ -1,26 +1,24 @@
-from pytube import YouTube
+from pytube import Playlist
 
+correct_playlist = False
 
-correct_video = False
-
-while not correct_video:
+while not correct_playlist:
     
     print("")
     link = input("Paste link here: ")
-    yt = YouTube(link)
+    p = Playlist(link)
     print("")
 
-    print("Title: ", yt.title)
-    print("Views: ", yt.author)
+    print("Title: ", p.title)
 
     verification = input("Is this the video you like to download? (y/n) ")
 
     if verification == "y":
-        correct_video = True
+        correct_playlist = True
     elif verification == "n":
         pass
         
 print("Wait for the download to finish")
-yd = yt.streams.get_highest_resolution()
-yd.download("C:/Users/Usuario/Desktop/general/videos")
-print("Video downloaded successfully")
+for video in p.videos:
+    video.streams.get_highest_resolution().download()
+print("Playlist downloaded successfully")
